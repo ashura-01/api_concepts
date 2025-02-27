@@ -9,6 +9,8 @@ class Home extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.green,
         foregroundColor: Colors.black,
+        title: Text("API",style: TextStyle(fontWeight: FontWeight.bold),),
+        centerTitle: true,
 
       ),
 
