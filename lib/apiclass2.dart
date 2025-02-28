@@ -9,6 +9,7 @@ class Apiclass2 extends StatefulWidget {
 
 class _Apiclass2State extends State<Apiclass2> {
   void productDialouge() {
+    
     showDialog(
       context: context,
       builder: (context) {
@@ -76,7 +77,7 @@ class _Apiclass2State extends State<Apiclass2> {
       appBar: AppBar(
         backgroundColor: Colors.blueGrey,
         foregroundColor: Colors.white,
-        title: Text("Productes"),
+        title: Text("Products"),
         centerTitle: true,
       ),
       body: Column(
