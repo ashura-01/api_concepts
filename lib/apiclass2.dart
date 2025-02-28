@@ -13,7 +13,6 @@ class _Apiclass2State extends State<Apiclass2> {
 
   void productDialouge() {
     TextEditingController nameController = TextEditingController();
-    // TextEditingController codeController = TextEditingController();
     TextEditingController imageController = TextEditingController();
     TextEditingController qtyController = TextEditingController();
     TextEditingController unitPriceController = TextEditingController();
@@ -25,30 +24,34 @@ class _Apiclass2State extends State<Apiclass2> {
         return AlertDialog(
           scrollable: true,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-          title: Text("Add Product"),
+          title: const Text("Add Product"),
           content: SingleChildScrollView(
             child: Column(
               children: [
                 TextField(
                     controller: nameController,
-                    decoration: InputDecoration(labelText: "Product Name")),
+                    decoration:
+                        const InputDecoration(labelText: "Product Name")),
                 TextField(
                     controller: imageController,
-                    decoration: InputDecoration(labelText: "Product Image")),
+                    decoration:
+                        const InputDecoration(labelText: "Product Image")),
                 TextField(
                     keyboardType: TextInputType.number,
                     controller: qtyController,
-                    decoration: InputDecoration(labelText: "Product Qty")),
+                    decoration:
+                        const InputDecoration(labelText: "Product Qty")),
                 TextField(
                     keyboardType: TextInputType.number,
                     controller: unitPriceController,
                     decoration:
-                        InputDecoration(labelText: "Product Unit Price")),
+                        const InputDecoration(labelText: "Product Unit Price")),
                 TextField(
                     keyboardType: TextInputType.number,
                     controller: totalPriceController,
-                    decoration: InputDecoration(labelText: "Total Price")),
-                SizedBox(height: 10),
+                    decoration:
+                        const InputDecoration(labelText: "Total Price")),
+                const SizedBox(height: 40),
               ],
             ),
           ),
@@ -60,30 +63,33 @@ class _Apiclass2State extends State<Apiclass2> {
                   style: TextButton.styleFrom(
                     foregroundColor: Colors.red,
                   ),
-                  child: Text("Cancel"),
+                  child: const Text("Cancel"),
                 ),
-                SizedBox(width: 40),
+                const SizedBox(width: 20),
                 ElevatedButton.icon(
                   onPressed: () {
                     setState(() {
                       productControllerObject.createProduct(
-                          nameController.text,
-                          imageController.text,
-                          int.parse(qtyController.text),
-                          int.parse(unitPriceController.text),
-                          int.parse(totalPriceController.text));
+                        nameController.text,
+                        imageController.text,
+                        int.parse(qtyController.text),
+                        int.parse(unitPriceController.text),
+                        int.parse(totalPriceController.text),
+                      );
                       fetchData();
+
                       Navigator.pop(context);
                     });
+
+                    setState(() {});
                   },
-                  icon: Icon(Icons.add, color: Colors.white),
-                  label: Text("Add Product"),
+                  icon: const Icon(Icons.add, color: Colors.white),
+                  label: const Text("Add Product"),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.black,
                     foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(10)), // Adjusted to 10
+                        borderRadius: BorderRadius.circular(10)),
                   ),
                 ),
               ],
@@ -95,14 +101,13 @@ class _Apiclass2State extends State<Apiclass2> {
   }
 
   Future<void> fetchData() async {
-    await productControllerObject.fetechProducts();
+    await productControllerObject.fetechProducts(); // Fetch updated products
 
     setState(() {});
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     fetchData();
   }
@@ -113,7 +118,7 @@ class _Apiclass2State extends State<Apiclass2> {
       appBar: AppBar(
         backgroundColor: Colors.blueGrey,
         foregroundColor: Colors.white,
-        title: Text("Products"),
+        title: const Text("Products"),
         centerTitle: true,
       ),
       body: Column(
@@ -123,18 +128,22 @@ class _Apiclass2State extends State<Apiclass2> {
                 itemCount: productControllerObject.products.length,
                 itemBuilder: (context, index) {
                   var product = productControllerObject.products[index];
+
                   return Card(
                     elevation: 4,
-                    margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                     child: ListTile(
                       leading: Image.network(
-                        "https://shorturl.at/0yPd2",
+                        product['ProductImage'] ?? "https://shorturl.at/0yPd2",
                         height: 50,
                         width: 50,
+                        errorBuilder: (context, error, stackTrace) =>
+                            const Icon(Icons.image_not_supported),
                       ),
                       title: Text(
                         product['ProductName'],
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 18),
                       ),
                       subtitle: Text(
@@ -144,9 +153,9 @@ class _Apiclass2State extends State<Apiclass2> {
                         children: [
                           IconButton(
                               onPressed: () => productDialouge(),
-                              icon: Icon(Icons.edit)),
+                              icon: const Icon(Icons.edit)),
                           IconButton(
-                              onPressed: () {}, icon: Icon(Icons.delete)),
+                              onPressed: () {}, icon: const Icon(Icons.delete)),
                         ],
                       ),
                     ),
@@ -159,7 +168,7 @@ class _Apiclass2State extends State<Apiclass2> {
         onPressed: () => productDialouge(),
         backgroundColor: Colors.blueGrey,
         foregroundColor: Colors.white,
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }

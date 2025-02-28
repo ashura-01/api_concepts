@@ -15,7 +15,7 @@ class _HomeState extends State<Home> {
   Future<void> fetachUsers() async {
     final response =
         await http.get(Uri.parse('https://jsonplaceholder.typicode.com/users'));
-    print(response.statusCode);
+    // print(response.statusCode);
     if (response.statusCode == 200) {
       users = jsonDecode(response.body);
     } else {
@@ -25,7 +25,6 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     fetachUsers();
   }
@@ -73,15 +72,15 @@ class _HomeState extends State<Home> {
                       style: TextStyle(fontSize: 14),
                     ),
                     Text(
-                     "Email: ${user['email']}",
+                      "Email: ${user['email']}",
                       style: TextStyle(fontSize: 14),
                     ),
                     Text(
-                    "Phone: ${user['phone']}",
+                      "Phone: ${user['phone']}",
                       style: TextStyle(fontSize: 14),
                     ),
                     Text(
-                     user['website'],
+                      user['website'],
                       style: TextStyle(fontSize: 14),
                     ),
                   ],

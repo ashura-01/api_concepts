@@ -28,9 +28,9 @@ class ProductController {
       })
     );
 
-    print(response);
+    // print(response.body.toString());
     if (response.statusCode == 201) {
-      fetechProducts();
+      await fetechProducts();
     }
   }
 }
