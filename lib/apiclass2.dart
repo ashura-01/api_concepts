@@ -1,3 +1,4 @@
+import 'package:api_concepts/utils/product_controller.dart';
 import 'package:flutter/material.dart';
 
 class Apiclass2 extends StatefulWidget {
@@ -8,8 +9,16 @@ class Apiclass2 extends StatefulWidget {
 }
 
 class _Apiclass2State extends State<Apiclass2> {
+  final ProductController productControllerObject = ProductController();
+
   void productDialouge() {
-    
+    TextEditingController nameController = TextEditingController();
+    // TextEditingController codeController = TextEditingController();
+    TextEditingController imageController = TextEditingController();
+    TextEditingController qtyController = TextEditingController();
+    TextEditingController unitPriceController = TextEditingController();
+    TextEditingController totalPriceController = TextEditingController();
+
     showDialog(
       context: context,
       builder: (context) {
@@ -21,17 +30,23 @@ class _Apiclass2State extends State<Apiclass2> {
             child: Column(
               children: [
                 TextField(
+                    controller: nameController,
                     decoration: InputDecoration(labelText: "Product Name")),
                 TextField(
-                    decoration: InputDecoration(labelText: "Product Code")),
-                TextField(
+                    controller: imageController,
                     decoration: InputDecoration(labelText: "Product Image")),
                 TextField(
+                    keyboardType: TextInputType.number,
+                    controller: qtyController,
                     decoration: InputDecoration(labelText: "Product Qty")),
                 TextField(
+                    keyboardType: TextInputType.number,
+                    controller: unitPriceController,
                     decoration:
                         InputDecoration(labelText: "Product Unit Price")),
                 TextField(
+                    keyboardType: TextInputType.number,
+                    controller: totalPriceController,
                     decoration: InputDecoration(labelText: "Total Price")),
                 SizedBox(height: 10),
               ],
@@ -50,8 +65,16 @@ class _Apiclass2State extends State<Apiclass2> {
                 SizedBox(width: 40),
                 ElevatedButton.icon(
                   onPressed: () {
-                    // Add product logic here before closing the dialog
-                    Navigator.pop(context);
+                    setState(() {
+                      productControllerObject.createProduct(
+                          nameController.text,
+                          imageController.text,
+                          int.parse(qtyController.text),
+                          int.parse(unitPriceController.text),
+                          int.parse(totalPriceController.text));
+                      fetchData();
+                      Navigator.pop(context);
+                    });
                   },
                   icon: Icon(Icons.add, color: Colors.white),
                   label: Text("Add Product"),
@@ -71,6 +94,19 @@ class _Apiclass2State extends State<Apiclass2> {
     );
   }
 
+  Future<void> fetchData() async {
+    await productControllerObject.fetechProducts();
+
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,8 +120,9 @@ class _Apiclass2State extends State<Apiclass2> {
         children: [
           Expanded(
             child: ListView.builder(
-                itemCount: 50,
+                itemCount: productControllerObject.products.length,
                 itemBuilder: (context, index) {
+                  var product = productControllerObject.products[index];
                   return Card(
                     elevation: 4,
                     margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
@@ -96,11 +133,12 @@ class _Apiclass2State extends State<Apiclass2> {
                         width: 50,
                       ),
                       title: Text(
-                        "Iphone 15",
+                        product['ProductName'],
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 18),
                       ),
-                      subtitle: Text("Price: \$500 | Qty: 20"),
+                      subtitle: Text(
+                          "Price: \$${product['UnitPrice']} | Qty: ${product['Qty']}"),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -118,7 +156,7 @@ class _Apiclass2State extends State<Apiclass2> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: ()=>productDialouge(),
+        onPressed: () => productDialouge(),
         backgroundColor: Colors.blueGrey,
         foregroundColor: Colors.white,
         child: Icon(Icons.add),
