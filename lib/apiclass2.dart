@@ -135,19 +135,19 @@ class _Apiclass2State extends State<Apiclass2> {
                         const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                     child: ListTile(
                       leading: Image.network(
-                        product['ProductImage'] ?? "https://shorturl.at/0yPd2",
+                        product.img ?? "https://shorturl.at/0yPd2",
                         height: 50,
                         width: 50,
                         errorBuilder: (context, error, stackTrace) =>
                             const Icon(Icons.image_not_supported),
                       ),
                       title: Text(
-                        product['ProductName'],
+                        product.productName.toString(),
                         style: const TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 18),
                       ),
                       subtitle: Text(
-                          "Price: \$${product['UnitPrice']} | Qty: ${product['Qty']}"),
+                          "Price: \$${product.unitPrice} | Qty: ${product.qty}"),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
