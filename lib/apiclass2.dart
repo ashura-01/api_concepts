@@ -16,6 +16,22 @@ class _Apiclass2State extends State<Apiclass2> {
         .showSnackBar(SnackBar(content: Text(messege)));
   }
 
+  void showLoadingScreen(BuildContext context) {
+  showDialog(
+    context: context,
+    barrierDismissible: false,  
+    builder: (BuildContext context) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    },
+  );
+}
+
+void hideLoadingScreen(BuildContext context) {
+  Navigator.of(context).pop();  // Close the loading dialog
+}
+
   void productDialouge(
       {String? id,
       String? name,
@@ -23,17 +39,22 @@ class _Apiclass2State extends State<Apiclass2> {
       String? img,
       int? unitPrice,
       int? totalPrice}) {
-    TextEditingController nameController = TextEditingController();
-    TextEditingController imageController = TextEditingController();
-    TextEditingController qtyController = TextEditingController();
-    TextEditingController unitPriceController = TextEditingController();
-    TextEditingController totalPriceController = TextEditingController();
+    TextEditingController nameController =
+        TextEditingController(text: name ?? '');
+    TextEditingController imageController =
+        TextEditingController(text: img ?? '');
+    TextEditingController qtyController =
+        TextEditingController(text: qty?.toString() ?? '0');
+    TextEditingController unitPriceController =
+        TextEditingController(text: unitPrice?.toString() ?? '0');
+    TextEditingController totalPriceController =
+        TextEditingController(text: totalPrice?.toString() ?? '0');
 
-    nameController.text = name ?? '';
-    qtyController.text = qty.toString() ?? '0';
-    imageController.text = img ?? '';
-    unitPriceController.text = unitPrice.toString() ?? '0';
-    totalPriceController.text = totalPrice.toString() ?? '0';
+    // nameController.text = name ?? '';
+    // qtyController.text = qty.toString() ?? '0';
+    // imageController.text = img ?? '';
+    // unitPriceController.text = unitPrice.toString() ?? '0';
+    // totalPriceController.text = totalPrice.toString() ?? '0';
 
     showDialog(
       context: context,
@@ -138,6 +159,7 @@ class _Apiclass2State extends State<Apiclass2> {
   @override
   void initState() {
     super.initState();
+    
     fetchData();
   }
 

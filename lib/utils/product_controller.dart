@@ -7,7 +7,7 @@ import 'package:api_concepts/model/product_model.dart';
 class ProductController {
   List<Data> products = [];
 
-  Future<void> fetechProducts() async {
+  Future<bool> fetechProducts() async {
     final response = await http.get(Uri.parse(Urls.readProduct));
 
     if (response.statusCode == 200) {
@@ -15,7 +15,10 @@ class ProductController {
 
       ProductModel productModel = ProductModel.fromJson(data);
       products = productModel.data ?? [];
+
+      return true;
     }
+    return false;
   }
 
   Future<void> createProduct(
