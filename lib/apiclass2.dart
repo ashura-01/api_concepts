@@ -153,7 +153,7 @@ void hideLoadingScreen(BuildContext context) {
     print("Fetching data...");
     await productControllerObject.fetechProducts();
     print("Data fetched: ${productControllerObject.products}");
-    setState(() {}); // Ensure UI updates
+    setState(() {}); 
   }
 
   @override
