@@ -12,5 +12,4 @@ class MyAPP extends StatelessWidget {
       home: Apiclass2(),
     );
   }
-  
 }
